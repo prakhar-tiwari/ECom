@@ -1,0 +1,14 @@
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const GET_PRODUCTS="GET_PRODUCTS";
+export const ADD_PRODUCT="ADD_PRODUCT";
+export const GET_PRODUCT="GET_PRODUCT";
+export const ADD_COMMENT="ADD_COMMENT";
+export const DELETE_COMMENT="DELETE_COMMENT";
+export const CLEAR_COMMENTS="CLEAR_COMMENTS";
+export const GET_COMMENTS="GET_COMMENTS";
+export const GET_ERRORS = "GET_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const GET_CART = "GET_CART";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const UPDATE_ITEM = "UPDATE_ITEM";
+export const REMOVE_ITEM = "REMOVE_ITEM";
