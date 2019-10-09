@@ -39,6 +39,9 @@ class SearchBox extends Component {
           console.log(err);
         });
     }
+    else{
+      this.setState({ searchedResults: [] });
+    }
   };
 
   render() {

@@ -4,6 +4,7 @@ const secretOrKey = require('../utils/keys').secretOrKey;
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const keys = require('../utils/keys');
 
 const opts = {};
@@ -26,19 +27,36 @@ module.exports = (passport) => {
     });
 
     passport.use(
-        new JWTStrategy(opts, (jwt_payload, done) => {
-            User.findById(jwt_payload.id)
-                .then(user => {
-                    if (user) {
-                        return done(null, user);
+        new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password'
+           },
+            function (email, password, done) {
+                User.findOne({ email: email }, function (err, user) {
+                    if (err) { return done(err); }
+                    if (!user) {
+                        return done(null, false, { message: 'Incorrect username.' });
                     }
-                    return done(null, false);
+                    return done(null, user);
                 })
-                .catch(err => {
-                    console.log(err);
-                })
-        })
-    );
+            }
+        )
+    )
+
+    // passport.use(
+    //     new JWTStrategy(opts, (jwt_payload, done) => {
+    //         User.findById(jwt_payload.id)
+    //             .then(user => {
+    //                 if (user) {
+    //                     return done(null, user);
+    //                 }
+    //                 return done(null, false);
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //             })
+    //     })
+    // );
 
     passport.use(new GoogleStrategy(
         {
@@ -57,7 +75,6 @@ module.exports = (passport) => {
                     name: profile.displayName,
                     email: profile.emails[0].value
                 }).save();
-
                 done(null, user);
             }
             catch (err) {

@@ -13,9 +13,14 @@ import Product from './components/shop/Product';
 import Cart from './components/shop/Cart';
 import Checkout from './components/shop/Checkout';
 import Orders from './components/shop/Orders';
+import { connect } from 'react-redux';
+import { googleCurrentUser } from './actions/authActions';
 
 
 class App extends Component {
+  componentDidMount() {
+    this.props.googleCurrentUser();
+  }
   render() {
     return (
       <BrowserRouter>
@@ -59,4 +64,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { googleCurrentUser })(App);

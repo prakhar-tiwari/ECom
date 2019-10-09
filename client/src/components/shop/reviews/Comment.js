@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 class Comment extends Component {
   render() {
-    const { text, user,_id } = this.props.comment;
+    const { text, user, _id } = this.props.comment;
     const { auth } = this.props;
     return (
-        <div key={_id} className="card card-body mb-3">
+      <div key={_id} className="card card-body mb-3">
         <div className="row">
           <div className="col-md-2">
             <a href="#">
@@ -20,9 +20,9 @@ class Comment extends Component {
           </div>
           <div className="col-md-10">
             <p className="lead">{text}</p>
-            {user._id === auth.user.id ? (
+            {user._id === auth.user._id ? (
               <button
-                onClick={this.props.delete.bind(this,_id)}
+                onClick={this.props.delete.bind(this, _id)}
                 type="button"
                 className="btn btn-danger mr-1"
               >

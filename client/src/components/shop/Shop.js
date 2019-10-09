@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import classes from "../css/product-lists.module.css";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProducts } from "../../actions/shopActions";
-import { googleCurrentUser } from '../../actions/authActions';
 import Pagination from "../common/Pagination";
 
 class Shop extends Component {
@@ -18,7 +16,6 @@ class Shop extends Component {
 
   componentWillMount() {
     this.props.getProducts();
-    this.props.googleCurrentUser();
   }
 
   onPageChange = pageItems => {
@@ -66,6 +63,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProducts,
-  googleCurrentUser }
+  { getProducts }
 )(Shop);

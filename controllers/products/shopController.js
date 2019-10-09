@@ -107,7 +107,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.addComment = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   const productId = req.body.id;
   const text = req.body.text;
   Product.findById(productId)
@@ -151,7 +151,7 @@ exports.deleteComment = (req, res, next) => {
 
 exports.addUpdateRating = (req, res, next) => {
   const rate = req.body.rate;
-  const userId = req.user.id;
+  const userId = req.user._id;
   const productId = req.body.id;
   Product.findOne({ _id: productId })
     .then(product => {
@@ -205,8 +205,7 @@ exports.getCart = (req, res, next) => {
   if (!req.session.cart) {
     return res.status(400).json({ message: "Cart is empty" });
   }
-  //req.session.cart={};
-  const cart = new Cart(req.session.cart);
+  const cart = new Cart(req.session.cart)
   const result = cart.getCart();
   return res.status(200).json(result);
 };
@@ -247,7 +246,7 @@ exports.postOrder = (req, res, next) => {
     contactNumber: orderInfo.contactNumber,
     products: orderedProducts,
     user: {
-      userId: req.user.id,
+      userId: req.user._id,
       email: orderInfo.email
     },
     totalPrice: totalPrice
@@ -268,7 +267,7 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   Order.find({ "user.userId": userId })
     .then(orders => {
       if (!orders) {

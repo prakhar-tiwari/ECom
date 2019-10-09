@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const shopController = require('../controllers/products/shopController');
+const requireLogin = require('../middlewares/requireLogin');
 
 
 //public route
@@ -14,35 +15,35 @@ router.get('/searchproducts', shopController.searchProducts);
 router.get('/getproduct/:id', shopController.getProduct);
 
 //private route
-router.post('/comment', passport.authenticate('jwt', { session: false }), shopController.addComment);
+router.post('/comment', requireLogin, shopController.addComment);
 
 //private route
-router.post('/deletecomment', passport.authenticate('jwt', { session: false }), shopController.deleteComment);
+router.post('/deletecomment', requireLogin, shopController.deleteComment);
 
 //private route
-router.post('/rating', passport.authenticate('jwt', { session: false }), shopController.addUpdateRating);
+router.post('/rating', requireLogin, shopController.addUpdateRating);
 
 //private route
-router.post('/add-to-cart/:id', passport.authenticate('jwt', { session: false }), shopController.addToCart);
+router.post('/add-to-cart/:id', requireLogin, shopController.addToCart);
 
 //private route
-router.get('/getcart', passport.authenticate('jwt', { session: false }), shopController.getCart);
+router.get('/getcart', requireLogin, shopController.getCart);
 
 //private route
-router.post('/removeitem', passport.authenticate('jwt', { session: false }), shopController.removeItem);
+router.post('/removeitem', requireLogin, shopController.removeItem);
 
 //private route
-router.post('/updateitem', passport.authenticate('jwt', { session: false }), shopController.updateItem);
+router.post('/updateitem', requireLogin, shopController.updateItem);
 
 //private route
-router.post('/order', passport.authenticate('jwt', { session: false }), shopController.postOrder);
+router.post('/order', requireLogin, shopController.postOrder);
 
 //private route
-router.get('/order', passport.authenticate('jwt', { session: false }), shopController.getOrders);
+router.get('/order', requireLogin, shopController.getOrders);
 
 //private route
-router.get('/order/:id', passport.authenticate('jwt', { session: false }), shopController.getInvoice);
+router.get('/order/:id', requireLogin, shopController.getInvoice);
 
-router.post('/searchproducts',shopController.searchProducts);
+router.post('/searchproducts', shopController.searchProducts);
 
 module.exports = router;

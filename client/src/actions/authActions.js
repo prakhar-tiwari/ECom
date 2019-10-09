@@ -6,7 +6,6 @@ import setAuthToken from '../utils/setAuthToken';
 export const signUp = (userdata, history) => dispatch => {
     axios.post('/signup', userdata)
         .then(response => {
-            console.log(response);
             history.push('/login');
         })
         .catch(err => {
@@ -52,25 +51,31 @@ export const login = userData => dispatch => {
         })
 }
 
-export const googleCurrentUser=()=>dispatch=>{
+export const googleCurrentUser = () => dispatch => {
     axios.get('/current_user')
-    .then(res=>{
-        dispatch(setCurrentUser(res.data));
-    })
-    .catch(err=>{
-        console.log(err);
-    })
+        .then(res => {
+            dispatch(setCurrentUser(res.data));
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }
 
-export const setCurrentUser=(decoded)=>{
-    return{
+export const setCurrentUser = (decoded) => {
+    return {
         type: SET_CURRENT_USER,
         payload: decoded
     }
 }
 
-export const logout=()=>dispatch=>{
-localStorage.removeItem('token');
-setAuthToken(false);
-dispatch(setCurrentUser({}));
+export const logout = () => dispatch => {
+    axios.get('/auth/logout')
+        .then(res => {
+            localStorage.removeItem('token');
+            setAuthToken(false);
+            dispatch(setCurrentUser({}));
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }

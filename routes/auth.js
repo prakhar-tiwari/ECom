@@ -47,12 +47,17 @@ router.get(
     '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      res.redirect('http://localhost:3000');
+        res.redirect('http://localhost:3000');
     }
-  );
+);
 
-router.get('/current_user',(req,res,next)=>{
+router.get('/current_user', (req, res, next) => {
     return res.send(req.user);
+});
+
+router.get('/auth/logout', (req, res, next) => {
+    req.logout();
+    res.redirect('http://localhost:3000');
 })
 
 

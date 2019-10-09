@@ -61,7 +61,7 @@ exports.loginUser = (req, res, next) => {
         .then(isMatch => {
             if (isMatch) {
                 const payload = {
-                    id: authUser._id,
+                    _id: authUser._id,
                     name: authUser.name
                 }
                 jwt.sign(
@@ -88,3 +88,49 @@ exports.loginUser = (req, res, next) => {
         })
 
 }
+
+
+
+
+// exports.loginUser = (req, res, next) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//         return res.status(422).json(errors.array());
+//     }
+
+//     passport.authenticate('local', { session: true }, (err, user, info) => {
+//         if (err || !user) {
+//             return res.status(400).json({
+//                 message: 'Something is not right',
+//                 user: user
+//             });
+//         }
+//         req.login(user, { session: true }, (err) => {
+//             if (err) {
+//                 res.send(err);
+//             }
+
+//             console.log(req.session)
+
+//             payload = {
+//                 _id: user._id,
+//                 name: user.name
+//             }
+
+//             jwt.sign(
+//                 payload,
+//                 keys,
+//                 { expiresIn: 3600 },
+//                 (err, token) => {
+//                     if (err) {
+//                         return res.status(400).json(err);
+//                     }
+//                     return res.status(200)
+//                         .json({
+//                             success: true,
+//                             token: 'Bearer ' + token
+//                         })
+//                 })
+//         })
+//     })(req, res);
+// }

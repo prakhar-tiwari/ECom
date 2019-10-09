@@ -10,7 +10,7 @@
 #myInput:focus {outline: 3px solid #ddd;}
 
 .dropdown {
-  position: relative;
+  position:initial;
   display: inline-block;
   margin-bottom: auto;
 }
