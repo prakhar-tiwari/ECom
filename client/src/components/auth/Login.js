@@ -59,6 +59,12 @@ class Login extends Component {
         link.click();
     }
 
+    facebookAuth=()=>{
+        const link = document.createElement('a');
+        link.href = 'http://localhost:8080/auth/facebook';
+        link.click();
+    }
+
     render() {
         const { errors } = this.state;
         return (
@@ -69,7 +75,7 @@ class Login extends Component {
                             <div className={classnames("card-header", classes.Cardheader)}>
                                 <h3>Login</h3>
                                 <div className={classnames("d-flex justify-content-end", classes.SocialIcon)}>
-                                    <span><FontAwesomeIcon icon={faFacebookSquare}></FontAwesomeIcon></span>
+                                    <span><FontAwesomeIcon onClick={this.facebookAuth} icon={faFacebookSquare}></FontAwesomeIcon></span>
                                     <span><FontAwesomeIcon onClick={this.googleAuth} icon={faGooglePlusSquare}></FontAwesomeIcon></span>
                                     <span><FontAwesomeIcon icon={faTwitterSquare}></FontAwesomeIcon></span>
                                 </div>

@@ -17,8 +17,14 @@ const userSchema = new Schema({
     address: {
         type: String
     },
-    googleId:{
-        type:String
+    googleId: {
+        type: String
+    },
+    facebookId: {
+        type: String
+    },
+    picture: {
+        type: String
     }
 });
 

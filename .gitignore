@@ -1,3 +1,5 @@
 /node_modules
 
 /superheroshop
+
+/utils/keys.js

@@ -10,7 +10,10 @@ export const getCart=()=>dispatch=>{
         })
     })
     .catch(err=>{
-        console.log(err)
+        dispatch({
+            type:GET_CART,
+            payload:[]
+        })
     })
 }
 

@@ -51,12 +51,25 @@ router.get(
     }
 );
 
+router.get('/auth/facebook',
+    passport.authenticate('facebook', {
+        scope: ['email']
+    })
+)
+
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook'),
+    (req, res) => {
+        res.redirect('http://localhost:3000');
+    })
+
 router.get('/current_user', (req, res, next) => {
     return res.send(req.user);
 });
 
 router.get('/auth/logout', (req, res, next) => {
     req.logout();
+    req.session.destroy();
     res.redirect('http://localhost:3000');
 })
 

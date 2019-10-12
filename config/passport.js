@@ -4,6 +4,7 @@ const secretOrKey = require('../utils/keys').secretOrKey;
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const keys = require('../utils/keys');
 
@@ -30,7 +31,7 @@ module.exports = (passport) => {
         new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
-           },
+        },
             function (email, password, done) {
                 User.findOne({ email: email }, function (err, user) {
                     if (err) { return done(err); }
@@ -66,6 +67,7 @@ module.exports = (passport) => {
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
+                console.log(profile)
                 const existingUser = await User.findOne({ googleId: profile.id });
                 if (existingUser) {
                     return done(null, existingUser)
@@ -82,4 +84,32 @@ module.exports = (passport) => {
             }
         }
     ));
+
+    passport.use(new FacebookStrategy(
+        {
+            clientID: keys.facebookAppId,
+            clientSecret: keys.facebookAppSecret,
+            callbackURL: '/auth/facebook/callback',
+            profileFields: ['id', 'displayName', 'photos', 'email', 'gender', 'name']
+        },
+
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                const existingUser = await User.findOne({ facebookId: profile.id });
+                if (existingUser) {
+                    return done(null, existingUser)
+                }
+                const user = await new User({
+                    facebookId: profile.id,
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    picture: profile.photos[0].value
+                }).save();
+                done(null, user);
+            }
+            catch (err) {
+                done(null, err);
+            }
+        }
+    ))
 }

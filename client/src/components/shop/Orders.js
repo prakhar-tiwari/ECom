@@ -34,7 +34,7 @@ class Orders extends Component {
         link.click();
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
       });
   }
 

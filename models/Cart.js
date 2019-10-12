@@ -28,7 +28,6 @@ module.exports = function Cart(oldCart) {
   };
 
   this.getCart = () => {
-    // var obj=Object.assign({},this.items);
     return {
       items: this.items,
       quantity: this.totalQuantity,

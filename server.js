@@ -7,7 +7,7 @@ const passport = require('passport');
 const multer = require('multer');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const uuid=require('uuid/v4');
+const uuid = require('uuid/v4');
 
 const authRoute = require('./routes/auth');
 const productRoute = require('./routes/admin');
@@ -35,8 +35,10 @@ app.use(session({
     secret: keys.secretOrKey,
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    cookie: { maxAge: 180 * 60 * 1000 }
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    }),
+    cookie: { maxAge: 180 * 60 * 1000 },
 }))
 
 app.use(passport.initialize());
